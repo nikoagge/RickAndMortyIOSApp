@@ -19,6 +19,10 @@
 		17267EDD29AA8BAD0091811C /* RickAndMortyEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17267ED629AA8BAD0091811C /* RickAndMortyEpisode.swift */; };
 		17267EDE29AA8BAD0091811C /* RickAndMortyLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17267ED729AA8BAD0091811C /* RickAndMortyLocation.swift */; };
 		17267EDF29AA8BAD0091811C /* RickAndMortyOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17267ED829AA8BAD0091811C /* RickAndMortyOrigin.swift */; };
+		17267EE329AA8EA80091811C /* RickAndMortyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17267EE029AA8EA80091811C /* RickAndMortyRequest.swift */; };
+		17267EE429AA8EA80091811C /* RickAndMortyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17267EE129AA8EA80091811C /* RickAndMortyService.swift */; };
+		17267EE529AA8EA80091811C /* RickAndMortyEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17267EE229AA8EA80091811C /* RickAndMortyEndpoint.swift */; };
+		17267EE829AA8EBA0091811C /* RickAndMortyGetAllCharactersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17267EE729AA8EBA0091811C /* RickAndMortyGetAllCharactersResponse.swift */; };
 		1798A18D29AA5F0300184292 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1798A18C29AA5F0300184292 /* AppDelegate.swift */; };
 		1798A18F29AA5F0300184292 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1798A18E29AA5F0300184292 /* SceneDelegate.swift */; };
 		1798A19629AA5F0600184292 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1798A19529AA5F0600184292 /* Assets.xcassets */; };
@@ -38,6 +42,10 @@
 		17267ED629AA8BAD0091811C /* RickAndMortyEpisode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RickAndMortyEpisode.swift; sourceTree = "<group>"; };
 		17267ED729AA8BAD0091811C /* RickAndMortyLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RickAndMortyLocation.swift; sourceTree = "<group>"; };
 		17267ED829AA8BAD0091811C /* RickAndMortyOrigin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RickAndMortyOrigin.swift; sourceTree = "<group>"; };
+		17267EE029AA8EA80091811C /* RickAndMortyRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RickAndMortyRequest.swift; sourceTree = "<group>"; };
+		17267EE129AA8EA80091811C /* RickAndMortyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RickAndMortyService.swift; sourceTree = "<group>"; };
+		17267EE229AA8EA80091811C /* RickAndMortyEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RickAndMortyEndpoint.swift; sourceTree = "<group>"; };
+		17267EE729AA8EBA0091811C /* RickAndMortyGetAllCharactersResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RickAndMortyGetAllCharactersResponse.swift; sourceTree = "<group>"; };
 		1798A18929AA5F0300184292 /* RickAndMortyIOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyIOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1798A18C29AA5F0300184292 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1798A18E29AA5F0300184292 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +93,7 @@
 		17267EC129AA7E0F0091811C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				17267EE629AA8EBA0091811C /* ApiResponseTypes */,
 				17267ED129AA8BAD0091811C /* DataTypes */,
 			);
 			path = Models;
@@ -127,6 +136,9 @@
 		17267EC629AA7E770091811C /* APIClient */ = {
 			isa = PBXGroup;
 			children = (
+				17267EE229AA8EA80091811C /* RickAndMortyEndpoint.swift */,
+				17267EE029AA8EA80091811C /* RickAndMortyRequest.swift */,
+				17267EE129AA8EA80091811C /* RickAndMortyService.swift */,
 			);
 			path = APIClient;
 			sourceTree = "<group>";
@@ -143,6 +155,14 @@
 				17267ED829AA8BAD0091811C /* RickAndMortyOrigin.swift */,
 			);
 			path = DataTypes;
+			sourceTree = "<group>";
+		};
+		17267EE629AA8EBA0091811C /* ApiResponseTypes */ = {
+			isa = PBXGroup;
+			children = (
+				17267EE729AA8EBA0091811C /* RickAndMortyGetAllCharactersResponse.swift */,
+			);
+			path = ApiResponseTypes;
 			sourceTree = "<group>";
 		};
 		1798A18029AA5F0300184292 = {
@@ -248,16 +268,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				17267ECC29AA8B550091811C /* RickAndMortyTabBarController.swift in Sources */,
+				17267EE329AA8EA80091811C /* RickAndMortyRequest.swift in Sources */,
 				17267EDD29AA8BAD0091811C /* RickAndMortyEpisode.swift in Sources */,
 				17267ECE29AA8B550091811C /* RickAndMortyEpisodeViewController.swift in Sources */,
 				17267EDA29AA8BAD0091811C /* RickAndMortyCharacter.swift in Sources */,
 				17267EDB29AA8BAD0091811C /* RickAndMortySingleLocation.swift in Sources */,
 				17267EDE29AA8BAD0091811C /* RickAndMortyLocation.swift in Sources */,
+				17267EE529AA8EA80091811C /* RickAndMortyEndpoint.swift in Sources */,
+				17267EE829AA8EBA0091811C /* RickAndMortyGetAllCharactersResponse.swift in Sources */,
 				17267ECF29AA8B550091811C /* RickAndMortySettingsViewController.swift in Sources */,
 				17267ED929AA8BAD0091811C /* RickAndMortyCharacterGender.swift in Sources */,
 				17267ED029AA8B550091811C /* RickAndMortyCharactersViewController.swift in Sources */,
 				17267EDF29AA8BAD0091811C /* RickAndMortyOrigin.swift in Sources */,
 				17267ECD29AA8B550091811C /* RickAndMortyLocationViewController.swift in Sources */,
+				17267EE429AA8EA80091811C /* RickAndMortyService.swift in Sources */,
 				17267EDC29AA8BAD0091811C /* RickAndMortyCharacterStatus.swift in Sources */,
 				1798A18D29AA5F0300184292 /* AppDelegate.swift in Sources */,
 				1798A18F29AA5F0300184292 /* SceneDelegate.swift in Sources */,
