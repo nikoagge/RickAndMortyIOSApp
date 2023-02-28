@@ -7,12 +7,40 @@
 
 import UIKit
 
+protocol RickAndMortyCharactersListViewModelDelegate: AnyObject {
+    func didLoadInitialRickAndMortyCharacters()
+}
+
 final class RickAndMortyCharactersListViewModel: NSObject {
+    private var rickAndMortyCharacters: [RickAndMortyCharacter] = [] {
+        didSet {
+            for rickAndMortyCharacter in rickAndMortyCharacters {
+                let rickAndMortyCharacterCollectionViewCellViewModel = RickAndMortyCharacterCollectionViewCellViewModel(
+                    characterName: rickAndMortyCharacter.name,
+                    characterStatus: rickAndMortyCharacter.status,
+                    characterImageURL: URL(string: rickAndMortyCharacter.image)
+                )
+                rickAndMortyCharacterCollectionViewCellViewModels.append(rickAndMortyCharacterCollectionViewCellViewModel)
+            }
+        }
+    }
+    
+    private var rickAndMortyCharacterCollectionViewCellViewModels: [RickAndMortyCharacterCollectionViewCellViewModel] = []
+    
+    public weak var delegate: RickAndMortyCharactersListViewModelDelegate?
+    
     func fetchRickAndMortyCharacters() {
-        RickAndMortyService.shared.execute(.listOfCharactersRequest, expecting: RickAndMortyGetAllCharactersResponse.self) { result in
+        RickAndMortyService.shared.execute(
+            .listOfCharactersRequest,
+            expecting: RickAndMortyGetAllCharactersResponse.self
+        ) { [weak self] result in
             switch result {
             case .success(let rickAndMortyGetAllCharactersResponse):
-                debugPrint("Example image url: "+String(rickAndMortyGetAllCharactersResponse.results.first?.image ?? "No image"))
+                let results = rickAndMortyGetAllCharactersResponse.results
+                self?.rickAndMortyCharacters = results
+                DispatchQueue.main.async {
+                    self?.delegate?.didLoadInitialRickAndMortyCharacters()
+                }
                 
             case .failure(let error):
                 debugPrint(String(describing: error))
@@ -23,20 +51,14 @@ final class RickAndMortyCharactersListViewModel: NSObject {
 
 extension RickAndMortyCharactersListViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 22
+        return rickAndMortyCharacterCollectionViewCellViewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let rickAndMortyCharacterCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: RickAndMortyCharacterCollectionViewCell.identifier, for: indexPath) as? RickAndMortyCharacterCollectionViewCell else {
             fatalError("Unsupported cell")
         }
-        
-        let rickAndMortyCharacterCollectionViewCellViewModel = RickAndMortyCharacterCollectionViewCellViewModel(
-            characterName: "Nikos",
-            characterStatus: .alive,
-            characterImageURL: URL(string: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")
-        )
-        rickAndMortyCharacterCollectionViewCell.configure(with: rickAndMortyCharacterCollectionViewCellViewModel)
+        rickAndMortyCharacterCollectionViewCell.configure(with: rickAndMortyCharacterCollectionViewCellViewModels[indexPath.row])
         
         return rickAndMortyCharacterCollectionViewCell
     }

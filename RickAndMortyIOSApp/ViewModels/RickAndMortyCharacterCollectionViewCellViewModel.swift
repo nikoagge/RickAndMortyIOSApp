@@ -13,7 +13,7 @@ final class RickAndMortyCharacterCollectionViewCellViewModel {
     private let characterImageURL: URL?
     
     public var characterStatusText: String {
-        return characterStatus.rawValue
+        return "Status: \(characterStatus.text)"
     }
     
     init(

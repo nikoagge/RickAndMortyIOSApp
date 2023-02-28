@@ -36,6 +36,7 @@ final class RickAndMortyCharactersListView: UIView {
         
         setupUI()
         spinner.startAnimating()
+        rickAndMortyCharactersListViewModel.delegate = self
         rickAndMortyCharactersListViewModel.fetchRickAndMortyCharacters()
     }
     
@@ -69,14 +70,16 @@ private extension RickAndMortyCharactersListView {
     func setupCollectionView() {
         collectionView.dataSource = rickAndMortyCharactersListViewModel
         collectionView.delegate = rickAndMortyCharactersListViewModel
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
-            self.spinner.stopAnimating()
-            self.collectionView.isHidden = false
-            
-            UIView.animate(withDuration: 0.4) {
-                self.collectionView.alpha = 1
-            }
+    }
+}
+
+extension RickAndMortyCharactersListView: RickAndMortyCharactersListViewModelDelegate {
+    func didLoadInitialRickAndMortyCharacters() {
+        collectionView.reloadData()
+        spinner.stopAnimating()
+        collectionView.isHidden = false
+        UIView.animate(withDuration: 0.4) {
+            self.collectionView.alpha = 1
         }
     }
 }

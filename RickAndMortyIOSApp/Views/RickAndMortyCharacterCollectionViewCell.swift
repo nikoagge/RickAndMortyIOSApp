@@ -12,7 +12,8 @@ final class RickAndMortyCharacterCollectionViewCell: UICollectionViewCell {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -50,6 +51,11 @@ final class RickAndMortyCharacterCollectionViewCell: UICollectionViewCell {
         initializeValues()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setupContentViewLayer()
+    }
+    
     public func configure(with rickAndMortyCharacterCollectionViewCellViewModel: RickAndMortyCharacterCollectionViewCellViewModel) {
         nameLabel.text = rickAndMortyCharacterCollectionViewCellViewModel.characterName
         statusLabel.text = rickAndMortyCharacterCollectionViewCellViewModel.characterStatusText
@@ -78,6 +84,15 @@ private extension RickAndMortyCharacterCollectionViewCell {
     func setupContentView() {
         contentView.backgroundColor = .secondarySystemBackground
         contentView.addSubviews(imageView, nameLabel, statusLabel)
+        setupContentViewLayer()
+    }
+    
+    func setupContentViewLayer() {
+        contentView.layer.cornerRadius = 8
+        contentView.layer.shadowColor = UIColor.label.cgColor
+        contentView.layer.cornerRadius = 4
+        contentView.layer.shadowOffset = CGSize(width: -4, height: 4)
+        contentView.layer.shadowOpacity = 0.3
     }
     
     func addConstraints() {
@@ -86,16 +101,16 @@ private extension RickAndMortyCharacterCollectionViewCell {
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 3),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
-            nameLabel.heightAnchor.constraint(equalToConstant: 50),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            nameLabel.heightAnchor.constraint(equalToConstant: 30),
             
-            statusLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 3),
-            statusLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+            statusLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+            statusLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             statusLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -3),
-            statusLabel.heightAnchor.constraint(equalToConstant: 50)
+            statusLabel.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
