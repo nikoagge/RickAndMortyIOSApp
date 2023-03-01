@@ -7,8 +7,15 @@
 
 import UIKit
 
+protocol RickAndMortyCharactersListViewDelegate: AnyObject {
+    func rickAndMortyCharactersListView(
+        _ rickAndMortyCharactersListView: RickAndMortyCharactersListView,
+        didSelectRickAndMortyCharacter rickAndMortyCharacter: RickAndMortyCharacter
+    )
+}
+
 final class RickAndMortyCharactersListView: UIView {
-    private let rickAndMortyCharactersListViewModel = RickAndMortyCharactersListViewModel()
+    private let rickAndMortyCharactersListViewViewModel = RickAndMortyCharactersListViewViewModel()
     
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()
@@ -21,7 +28,7 @@ final class RickAndMortyCharactersListView: UIView {
     private let collectionView: UICollectionView = {
         let collectionViewFlowLayout = UICollectionViewFlowLayout()
         collectionViewFlowLayout.scrollDirection = .vertical
-        collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.isHidden = true
         collectionView.alpha = 0
@@ -31,13 +38,15 @@ final class RickAndMortyCharactersListView: UIView {
         return collectionView
     }()
     
+    public weak var delegate: RickAndMortyCharactersListViewDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupUI()
         spinner.startAnimating()
-        rickAndMortyCharactersListViewModel.delegate = self
-        rickAndMortyCharactersListViewModel.fetchRickAndMortyCharacters()
+        rickAndMortyCharactersListViewViewModel.delegate = self
+        rickAndMortyCharactersListViewViewModel.fetchRickAndMortyCharacters()
     }
     
     required init?(coder: NSCoder) {
@@ -68,12 +77,12 @@ private extension RickAndMortyCharactersListView {
     }
     
     func setupCollectionView() {
-        collectionView.dataSource = rickAndMortyCharactersListViewModel
-        collectionView.delegate = rickAndMortyCharactersListViewModel
+        collectionView.dataSource = rickAndMortyCharactersListViewViewModel
+        collectionView.delegate = rickAndMortyCharactersListViewViewModel
     }
 }
 
-extension RickAndMortyCharactersListView: RickAndMortyCharactersListViewModelDelegate {
+extension RickAndMortyCharactersListView: RickAndMortyCharactersListViewViewModelDelegate {
     func didLoadInitialRickAndMortyCharacters() {
         collectionView.reloadData()
         spinner.stopAnimating()
@@ -81,5 +90,9 @@ extension RickAndMortyCharactersListView: RickAndMortyCharactersListViewModelDel
         UIView.animate(withDuration: 0.4) {
             self.collectionView.alpha = 1
         }
+    }
+    
+    func didSelectRickAndMortyCharacter(_ rickAndMortyCharacter: RickAndMortyCharacter) {
+        delegate?.rickAndMortyCharactersListView(self, didSelectRickAndMortyCharacter: rickAndMortyCharacter)
     }
 }

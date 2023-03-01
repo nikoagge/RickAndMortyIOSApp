@@ -23,6 +23,7 @@ private extension RickAndMortyCharactersViewController {
     }
     
     func setupRickAndMortyCharactersListView() {
+        rickAndMortyCharactersListView.delegate = self
         view.addSubview(rickAndMortyCharactersListView)
         NSLayoutConstraint.activate([
             rickAndMortyCharactersListView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -30,5 +31,14 @@ private extension RickAndMortyCharactersViewController {
             rickAndMortyCharactersListView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             rickAndMortyCharactersListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+}
+
+extension RickAndMortyCharactersViewController: RickAndMortyCharactersListViewDelegate {
+    func rickAndMortyCharactersListView(_ rickAndMortyCharactersListView: RickAndMortyCharactersListView, didSelectRickAndMortyCharacter rickAndMortyCharacter: RickAndMortyCharacter) {
+        let rickAndMortyCharacterDetailViewViewModel = RickAndMortyCharacterDetailViewViewModel(rickAndMortyCharacter: rickAndMortyCharacter)
+        let rickAndMortyCharacterDetailViewController = RickAndMortyCharacterDetailViewController(rickAndMortyCharacterDetailViewViewModel: rickAndMortyCharacterDetailViewViewModel)
+        rickAndMortyCharacterDetailViewController.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(rickAndMortyCharacterDetailViewController, animated: true)
     }
 }

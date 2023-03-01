@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1700149E29ADF7E900DFF1CA /* RickAndMortyCharacterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1700149D29ADF7E900DFF1CA /* RickAndMortyCharacterDetailViewController.swift */; };
+		170014A229ADF8C100DFF1CA /* RickAndMortyCharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170014A129ADF8C100DFF1CA /* RickAndMortyCharacterDetailView.swift */; };
+		170014A429ADFA7500DFF1CA /* RickAndMortyCharacterDetailViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170014A329ADFA7500DFF1CA /* RickAndMortyCharacterDetailViewViewModel.swift */; };
 		1710FC5929ABAEFA0074AE45 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1710FC5829ABAEFA0074AE45 /* UIView+Extension.swift */; };
-		1710FC5B29ABB0580074AE45 /* RickAndMortyCharactersListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1710FC5A29ABB0580074AE45 /* RickAndMortyCharactersListViewModel.swift */; };
+		1710FC5B29ABB0580074AE45 /* RickAndMortyCharactersListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1710FC5A29ABB0580074AE45 /* RickAndMortyCharactersListViewViewModel.swift */; };
 		1710FC5D29ABC7860074AE45 /* RickAndMortyCharacterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1710FC5C29ABC7860074AE45 /* RickAndMortyCharacterCollectionViewCell.swift */; };
 		1710FC5F29ABCDAA0074AE45 /* RickAndMortyCharacterCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1710FC5E29ABCDAA0074AE45 /* RickAndMortyCharacterCollectionViewCellViewModel.swift */; };
 		17267ECC29AA8B550091811C /* RickAndMortyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17267EC729AA8B540091811C /* RickAndMortyTabBarController.swift */; };
@@ -35,8 +38,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1700149D29ADF7E900DFF1CA /* RickAndMortyCharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyCharacterDetailViewController.swift; sourceTree = "<group>"; };
+		170014A129ADF8C100DFF1CA /* RickAndMortyCharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyCharacterDetailView.swift; sourceTree = "<group>"; };
+		170014A329ADFA7500DFF1CA /* RickAndMortyCharacterDetailViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyCharacterDetailViewViewModel.swift; sourceTree = "<group>"; };
 		1710FC5829ABAEFA0074AE45 /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
-		1710FC5A29ABB0580074AE45 /* RickAndMortyCharactersListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RickAndMortyCharactersListViewModel.swift; sourceTree = "<group>"; };
+		1710FC5A29ABB0580074AE45 /* RickAndMortyCharactersListViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RickAndMortyCharactersListViewViewModel.swift; sourceTree = "<group>"; };
 		1710FC5C29ABC7860074AE45 /* RickAndMortyCharacterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyCharacterCollectionViewCell.swift; sourceTree = "<group>"; };
 		1710FC5E29ABCDAA0074AE45 /* RickAndMortyCharacterCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyCharacterCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		17267EC729AA8B540091811C /* RickAndMortyTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RickAndMortyTabBarController.swift; sourceTree = "<group>"; };
@@ -75,9 +81,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1700149F29ADF7EE00DFF1CA /* RickAndMortyCharacters */ = {
+			isa = PBXGroup;
+			children = (
+				1700149D29ADF7E900DFF1CA /* RickAndMortyCharacterDetailViewController.swift */,
+				17267ECB29AA8B550091811C /* RickAndMortyCharactersViewController.swift */,
+			);
+			path = RickAndMortyCharacters;
+			sourceTree = "<group>";
+		};
 		17267EBE29AA7DC20091811C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				170014A129ADF8C100DFF1CA /* RickAndMortyCharacterDetailView.swift */,
 				17267EE929AA92210091811C /* RickAndMortyCharactersListView.swift */,
 				1710FC5C29ABC7860074AE45 /* RickAndMortyCharacterCollectionViewCell.swift */,
 			);
@@ -88,7 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				1710FC5E29ABCDAA0074AE45 /* RickAndMortyCharacterCollectionViewCellViewModel.swift */,
-				1710FC5A29ABB0580074AE45 /* RickAndMortyCharactersListViewModel.swift */,
+				1710FC5A29ABB0580074AE45 /* RickAndMortyCharactersListViewViewModel.swift */,
+				170014A329ADFA7500DFF1CA /* RickAndMortyCharacterDetailViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -139,7 +156,7 @@
 		17267EC529AA7E6D0091811C /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				17267ECB29AA8B550091811C /* RickAndMortyCharactersViewController.swift */,
+				1700149F29ADF7EE00DFF1CA /* RickAndMortyCharacters */,
 				17267EC929AA8B550091811C /* RickAndMortyEpisodeViewController.swift */,
 				17267EC829AA8B540091811C /* RickAndMortyLocationViewController.swift */,
 				17267ECA29AA8B550091811C /* RickAndMortySettingsViewController.swift */,
@@ -298,8 +315,11 @@
 				17267EDF29AA8BAD0091811C /* RickAndMortyOrigin.swift in Sources */,
 				17267EEA29AA92210091811C /* RickAndMortyCharactersListView.swift in Sources */,
 				17267ECD29AA8B550091811C /* RickAndMortyLocationViewController.swift in Sources */,
+				1700149E29ADF7E900DFF1CA /* RickAndMortyCharacterDetailViewController.swift in Sources */,
 				17267EE429AA8EA80091811C /* RickAndMortyService.swift in Sources */,
-				1710FC5B29ABB0580074AE45 /* RickAndMortyCharactersListViewModel.swift in Sources */,
+				170014A229ADF8C100DFF1CA /* RickAndMortyCharacterDetailView.swift in Sources */,
+				170014A429ADFA7500DFF1CA /* RickAndMortyCharacterDetailViewViewModel.swift in Sources */,
+				1710FC5B29ABB0580074AE45 /* RickAndMortyCharactersListViewViewModel.swift in Sources */,
 				17267EDC29AA8BAD0091811C /* RickAndMortyCharacterStatus.swift in Sources */,
 				1798A18D29AA5F0300184292 /* AppDelegate.swift in Sources */,
 				1710FC5929ABAEFA0074AE45 /* UIView+Extension.swift in Sources */,

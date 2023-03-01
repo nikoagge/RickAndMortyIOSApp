@@ -1,5 +1,5 @@
 //
-//  RickAndMortyCharactersListViewModel.swift
+//  RickAndMortyCharactersListViewViewModel.swift
 //  RickAndMortyiOSApp
 //
 //  Created by Nikos Aggelidis on 25/2/23.
@@ -7,11 +7,12 @@
 
 import UIKit
 
-protocol RickAndMortyCharactersListViewModelDelegate: AnyObject {
+protocol RickAndMortyCharactersListViewViewModelDelegate: AnyObject {
     func didLoadInitialRickAndMortyCharacters()
+    func didSelectRickAndMortyCharacter(_ rickAndMortyCharacter: RickAndMortyCharacter)
 }
 
-final class RickAndMortyCharactersListViewModel: NSObject {
+final class RickAndMortyCharactersListViewViewModel: NSObject {
     private var rickAndMortyCharacters: [RickAndMortyCharacter] = [] {
         didSet {
             for rickAndMortyCharacter in rickAndMortyCharacters {
@@ -27,7 +28,13 @@ final class RickAndMortyCharactersListViewModel: NSObject {
     
     private var rickAndMortyCharacterCollectionViewCellViewModels: [RickAndMortyCharacterCollectionViewCellViewModel] = []
     
-    public weak var delegate: RickAndMortyCharactersListViewModelDelegate?
+    private var apiInfo: RickAndMortyGetAllCharactersResponse.Info? = nil
+    
+    public weak var delegate: RickAndMortyCharactersListViewViewModelDelegate?
+    
+    public var shouldShowLoadMoreIndicator: Bool {
+        return apiInfo?.next != nil
+    }
     
     func fetchRickAndMortyCharacters() {
         RickAndMortyService.shared.execute(
@@ -38,6 +45,7 @@ final class RickAndMortyCharactersListViewModel: NSObject {
             case .success(let rickAndMortyGetAllCharactersResponse):
                 let results = rickAndMortyGetAllCharactersResponse.results
                 self?.rickAndMortyCharacters = results
+                self?.apiInfo = rickAndMortyGetAllCharactersResponse.info
                 DispatchQueue.main.async {
                     self?.delegate?.didLoadInitialRickAndMortyCharacters()
                 }
@@ -47,9 +55,13 @@ final class RickAndMortyCharactersListViewModel: NSObject {
             }
         }
     }
+    
+    public func fetchAdditionalCharacters() {
+        
+    }
 }
 
-extension RickAndMortyCharactersListViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension RickAndMortyCharactersListViewViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return rickAndMortyCharacterCollectionViewCellViewModels.count
     }
@@ -70,5 +82,18 @@ extension RickAndMortyCharactersListViewModel: UICollectionViewDataSource, UICol
         return CGSize(
             width: width,
             height: width * 1.5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        delegate?.didSelectRickAndMortyCharacter(rickAndMortyCharacters[indexPath.row])
+    }
+}
+
+extension RickAndMortyCharactersListViewViewModel: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard shouldShowLoadMoreIndicator else { return }
+        
+        
     }
 }
