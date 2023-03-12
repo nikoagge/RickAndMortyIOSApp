@@ -9,6 +9,7 @@ import UIKit
 
 protocol RickAndMortyCharactersListViewViewModelDelegate: AnyObject {
     func didLoadInitialRickAndMortyCharacters()
+    func didLoadMoreCharacters(with newIndexPaths: [IndexPath])
     func didSelectRickAndMortyCharacter(_ rickAndMortyCharacter: RickAndMortyCharacter)
 }
 
@@ -21,7 +22,10 @@ final class RickAndMortyCharactersListViewViewModel: NSObject {
                     characterStatus: rickAndMortyCharacter.status,
                     characterImageURL: URL(string: rickAndMortyCharacter.image)
                 )
-                rickAndMortyCharacterCollectionViewCellViewModels.append(rickAndMortyCharacterCollectionViewCellViewModel)
+                
+                if !rickAndMortyCharacterCollectionViewCellViewModels.contains(rickAndMortyCharacterCollectionViewCellViewModel) {
+                    rickAndMortyCharacterCollectionViewCellViewModels.append(rickAndMortyCharacterCollectionViewCellViewModel)
+                }
             }
         }
     }
@@ -29,6 +33,8 @@ final class RickAndMortyCharactersListViewViewModel: NSObject {
     private var rickAndMortyCharacterCollectionViewCellViewModels: [RickAndMortyCharacterCollectionViewCellViewModel] = []
     
     private var apiInfo: RickAndMortyGetAllCharactersResponse.Info? = nil
+    
+    private var isLoadingMoreCharacters = false
     
     public weak var delegate: RickAndMortyCharactersListViewViewModelDelegate?
     
@@ -56,8 +62,42 @@ final class RickAndMortyCharactersListViewViewModel: NSObject {
         }
     }
     
-    public func fetchAdditionalCharacters() {
+    public func fetchAdditionalRickAndMortyCharacters(url: URL) {
+        guard !isLoadingMoreCharacters else { return }
+        isLoadingMoreCharacters = true
+        guard let rickAndMortyRequest = RickAndMortyRequest(url: url) else {
+            isLoadingMoreCharacters = false
+            
+            return
+        }
         
+        RickAndMortyService.shared.execute(
+            rickAndMortyRequest,
+            expecting: RickAndMortyGetAllCharactersResponse.self) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let responseModel):
+                    let moreResults = responseModel.results
+                    let info = responseModel.info
+                    self.apiInfo = info
+                    let originalCount = self.rickAndMortyCharacters.count
+                    let newCount = moreResults.count
+                    let total = originalCount + newCount
+                    let startinIndex = total - newCount
+                    let indexPathsToAdd: [IndexPath] = Array(startinIndex..<(startinIndex+newCount)).compactMap {
+                        return IndexPath(row: $0, section: 0)
+                    }
+                    self.rickAndMortyCharacters.append(contentsOf: moreResults)
+                    DispatchQueue.main.async {
+                        self.delegate?.didLoadMoreCharacters(
+                            with: indexPathsToAdd
+                        )
+//                        self.isLoadingMoreCharacters = false
+                    }
+                case .failure(let failure):
+                    self.isLoadingMoreCharacters = false
+                }
+            }
     }
 }
 
@@ -88,12 +128,46 @@ extension RickAndMortyCharactersListViewViewModel: UICollectionViewDataSource, U
         collectionView.deselectItem(at: indexPath, animated: true)
         delegate?.didSelectRickAndMortyCharacter(rickAndMortyCharacters[indexPath.row])
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionFooter,
+                let rickAndMortyFooterLoadingCollectionReusableView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: RickAndMortyFooterLoadingCollectionReusableView.identifier,
+                    for: indexPath
+                ) as? RickAndMortyFooterLoadingCollectionReusableView else { fatalError("Unsupported") }
+        rickAndMortyFooterLoadingCollectionReusableView.startAnimating()
+        
+        return rickAndMortyFooterLoadingCollectionReusableView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard shouldShowLoadMoreIndicator else { return .zero }
+        
+        return CGSize(
+            width: collectionView.frame.width,
+            height: 100
+        )
+    }
 }
 
 extension RickAndMortyCharactersListViewViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard shouldShowLoadMoreIndicator else { return }
-        
-        
+        guard shouldShowLoadMoreIndicator,
+                !isLoadingMoreCharacters,
+                !rickAndMortyCharacterCollectionViewCellViewModels.isEmpty,
+                let nextURLString = apiInfo?.next,
+                let nextURL = URL(string: nextURLString) else { return }
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] timer in
+            let offset = scrollView.contentOffset.y
+            let totalContentHeight = scrollView.contentSize.height
+            let totalScrollViewFixedHeight = scrollView.frame.size.height
+            
+            if offset >= totalContentHeight - totalScrollViewFixedHeight - 120 {
+                self?.fetchAdditionalRickAndMortyCharacters(url: nextURL)
+            }
+            
+            timer.invalidate()
+        }
     }
 }

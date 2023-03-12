@@ -34,6 +34,11 @@ final class RickAndMortyCharactersListView: UIView {
         collectionView.alpha = 0
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(RickAndMortyCharacterCollectionViewCell.self, forCellWithReuseIdentifier: RickAndMortyCharacterCollectionViewCell.identifier)
+        collectionView.register(
+            RickAndMortyFooterLoadingCollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: RickAndMortyFooterLoadingCollectionReusableView.identifier
+        )
         
         return collectionView
     }()
@@ -89,6 +94,12 @@ extension RickAndMortyCharactersListView: RickAndMortyCharactersListViewViewMode
         collectionView.isHidden = false
         UIView.animate(withDuration: 0.4) {
             self.collectionView.alpha = 1
+        }
+    }
+    
+    func didLoadMoreCharacters(with newIndexPaths: [IndexPath]) {
+        collectionView.performBatchUpdates {
+            self.collectionView.insertItems(at: newIndexPaths)
         }
     }
     

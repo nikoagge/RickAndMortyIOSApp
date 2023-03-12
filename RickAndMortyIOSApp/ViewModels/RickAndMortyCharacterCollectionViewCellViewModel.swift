@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class RickAndMortyCharacterCollectionViewCellViewModel {
+final class RickAndMortyCharacterCollectionViewCellViewModel: Hashable, Equatable {
     public let characterName: String
     private let characterStatus: RickAndMortyCharacterStatus
     private let characterImageURL: URL?
@@ -43,5 +43,15 @@ final class RickAndMortyCharacterCollectionViewCellViewModel {
             
             completion(.success(data))
         }.resume()
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(characterName)
+        hasher.combine(characterStatus)
+        hasher.combine(characterImageURL)
+    }
+    
+    static func == (lhs: RickAndMortyCharacterCollectionViewCellViewModel, rhs: RickAndMortyCharacterCollectionViewCellViewModel) -> Bool {
+        return lhs.hashValue == rhs.hashValue
     }
 }
