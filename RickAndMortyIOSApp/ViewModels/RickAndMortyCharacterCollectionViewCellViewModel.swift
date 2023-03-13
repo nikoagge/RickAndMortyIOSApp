@@ -32,17 +32,7 @@ final class RickAndMortyCharacterCollectionViewCellViewModel: Hashable, Equatabl
             
             return
         }
-        
-        let characterImageURLRequest = URLRequest(url: characterImageURL)
-        URLSession.shared.dataTask(with: characterImageURLRequest) { data, _, error in
-            guard let data = data, error == nil else {
-                completion(.failure(error ?? URLError(.badServerResponse)))
-                
-                return
-            }
-            
-            completion(.success(data))
-        }.resume()
+        RickAndMortyImageLoader.shared.downloadImage(characterImageURL, completion: completion)
     }
     
     func hash(into hasher: inout Hasher) {

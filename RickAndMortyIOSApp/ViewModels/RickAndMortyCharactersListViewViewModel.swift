@@ -92,7 +92,7 @@ final class RickAndMortyCharactersListViewViewModel: NSObject {
                         self.delegate?.didLoadMoreCharacters(
                             with: indexPathsToAdd
                         )
-//                        self.isLoadingMoreCharacters = false
+                        self.isLoadingMoreCharacters = false
                     }
                 case .failure(let failure):
                     self.isLoadingMoreCharacters = false

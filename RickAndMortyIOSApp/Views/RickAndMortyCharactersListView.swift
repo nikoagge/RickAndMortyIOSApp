@@ -97,7 +97,7 @@ extension RickAndMortyCharactersListView: RickAndMortyCharactersListViewViewMode
         }
     }
     
-    func didLoadMoreCharacters(with newIndexPaths: [IndexPath]) {
+    func didLoadMoreCharacters(with newIndexPaths: [IndexPath ]) {
         collectionView.performBatchUpdates {
             self.collectionView.insertItems(at: newIndexPaths)
         }

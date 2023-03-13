@@ -36,6 +36,7 @@
 		1798A18F29AA5F0300184292 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1798A18E29AA5F0300184292 /* SceneDelegate.swift */; };
 		1798A19629AA5F0600184292 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1798A19529AA5F0600184292 /* Assets.xcassets */; };
 		1798A19929AA5F0600184292 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1798A19729AA5F0600184292 /* LaunchScreen.storyboard */; };
+		17CA134829BE759100F352C3 /* RickAndMortyImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CA134729BE759100F352C3 /* RickAndMortyImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		1798A19529AA5F0600184292 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1798A19829AA5F0600184292 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1798A19A29AA5F0600184292 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17CA134729BE759100F352C3 /* RickAndMortyImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 		17267EC229AA7E160091811C /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				17CA134729BE759100F352C3 /* RickAndMortyImageLoader.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				17267ED929AA8BAD0091811C /* RickAndMortyCharacterGender.swift in Sources */,
 				17267ED029AA8B550091811C /* RickAndMortyCharactersViewController.swift in Sources */,
 				17267EDF29AA8BAD0091811C /* RickAndMortyOrigin.swift in Sources */,
+				17CA134829BE759100F352C3 /* RickAndMortyImageLoader.swift in Sources */,
 				17267EEA29AA92210091811C /* RickAndMortyCharactersListView.swift in Sources */,
 				17267ECD29AA8B550091811C /* RickAndMortyLocationViewController.swift in Sources */,
 				1700149E29ADF7E900DFF1CA /* RickAndMortyCharacterDetailViewController.swift in Sources */,
